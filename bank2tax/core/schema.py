@@ -4,9 +4,9 @@ from pydantic import BaseModel, Field
 
 
 class ExtractedAccount(BaseModel):
-    iban: str | None = Field(
+    account_number: str | None = Field(
         default=None,
-        description="International Bank Account Number",
+        description="Bank Account Number",
     )
     ending_balance: float | None = Field(
         default=None,
