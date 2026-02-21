@@ -43,7 +43,7 @@ def main() -> None:
         print("\n===== RESULT =====\n")
         for doc in result.documents:
             print(doc.model_dump_json(indent=2))
-        print(f"\nLatency: {t1 - t0:.3f} s")
+        print(f"\nLatency: {t1 - t0:.2f} s")
 
     except Exception as e:
         print(f"Error: {type(e).__name__}: {e}")
