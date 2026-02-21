@@ -30,7 +30,4 @@ def run_pipeline(
         documents.append(doc)
         accounts.extend(doc.accounts)
 
-        documents.append(doc)
-        accounts.extend(doc.accounts)
-
     return PipelineResult(documents=documents, accounts=accounts)
