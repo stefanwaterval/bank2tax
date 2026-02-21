@@ -16,6 +16,8 @@ class PipelineResult:
 def run_pipeline(
     pdf_paths: Iterable[str | Path],
     extractor: ExtractorAgent,
+    output_dir: Path,
+    save_md: int = 0,
 ) -> PipelineResult:
     documents: list[ExtractedDocument] = []
     accounts: list[ExtractedAccount] = []
@@ -23,6 +25,10 @@ def run_pipeline(
     for p in pdf_paths:
         path = Path(p)
         markdown = pdf_to_markdown(path)
+
+        if save_md == 1:
+            md_file = output_dir / f"{path.stem}.md"
+            md_file.write_text(markdown, encoding="utf-8")
 
         raw = extractor.extract(markdown=markdown, source_file=path.name)
         doc = ExtractedDocument.model_validate_json(raw)
