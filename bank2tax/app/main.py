@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import asyncio
+from pathlib import Path
 from time import perf_counter
-from typing import Any
 
 from nicegui import run, ui
+from nicegui.events import UploadEventArguments
 
 from bank2tax.core.extractor import ExtractorAgent
 from bank2tax.core.ollama_client import OllamaClient
@@ -17,6 +18,9 @@ def main() -> None:
 
     output_dir = settings.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    temp_dir = settings.project_root / "temp"
+    temp_dir.mkdir(parents=True, exist_ok=True)
 
     client = OllamaClient(
         base_url=settings.ollama_base_url,
@@ -69,28 +73,21 @@ def main() -> None:
         pagination=10,
     ).classes("w-full")
 
+    async def save_upload(event: UploadEventArguments) -> None:
+        filename = Path(event.file.name).name
+        dest = temp_dir / filename
+
+        await event.file.save(dest)
+
+    ui.upload(
+        label="Upload PDFs",
+        multiple=True,
+        auto_upload=True,
+        on_upload=save_upload,
+    ).props('accept=".pdf"')
     run_btn = ui.button("Run extraction", icon="play_arrow")
     spinner = ui.spinner(size="lg").classes("text-gray-500")
     spinner.visible = False
-
-    def _build_rows(result: Any) -> list[dict[str, Any]]:
-        # Attach source_file to each account row for display.
-        rows: list[dict[str, Any]] = []
-        row_id = 0
-        for doc in result.documents:
-            for acc in doc.accounts:
-                row_id += 1
-                rows.append(
-                    {
-                        "row_id": row_id,
-                        "source_file": doc.source_file,
-                        "institution": acc.institution,
-                        "currency": acc.currency,
-                        "ending_balance": acc.ending_balance,
-                        "account_number": acc.account_number,
-                    }
-                )
-        return rows
 
     async def on_run() -> None:
         error_label.text = ""
@@ -101,9 +98,11 @@ def main() -> None:
         await asyncio.sleep(0)
 
         try:
-            pdf_paths = sorted(settings.data_dir.glob("*.pdf"))
+            pdf_paths = sorted(temp_dir.glob("*.pdf"))
+            source_dir = temp_dir
+
             if not pdf_paths:
-                raise FileNotFoundError(f"No PDF found in {settings.data_dir}")
+                raise FileNotFoundError(f"No PDF found in {source_dir}")
 
             t0 = perf_counter()
 
@@ -117,7 +116,7 @@ def main() -> None:
 
             t1 = perf_counter()
 
-            table.rows = _build_rows(result)
+            table.rows = result.to_table_rows()
             table.update()
 
             latency_label.text = (
@@ -131,12 +130,14 @@ def main() -> None:
             spinner.visible = False
             run_btn.enable()
 
-    run_btn.on_click(on_run)
+            # Clean up temp_dir
+            for uploaded_pdf in temp_dir.glob("*.pdf"):
+                try:
+                    uploaded_pdf.unlink()
+                except Exception:
+                    pass
 
-    ui.separator()
-    ui.markdown(
-        "- Put PDFs into your configured `data_dir` and click **Run extraction**.\n"
-    ).classes("text-sm text-gray-600")
+    run_btn.on_click(on_run)
 
     ui.run(title="bank2tax", reload=False, host="127.0.0.1", port=8080)
 

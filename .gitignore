@@ -12,6 +12,7 @@ wheels/
 # Project specific
 data/
 output/
+temp/
 architecture.md
 
 # vscode

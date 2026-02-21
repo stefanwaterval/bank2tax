@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Iterable
 
 from bank2tax.core.docling_io import pdf_to_markdown
 from bank2tax.core.extractor import ExtractorAgent
@@ -11,6 +11,25 @@ from bank2tax.core.schema import ExtractedAccount, ExtractedDocument
 class PipelineResult:
     documents: list[ExtractedDocument]
     accounts: list[ExtractedAccount]
+
+    def to_table_rows(self) -> list[dict[str, Any]]:
+        rows = []
+        row_id = 0
+        for doc in self.documents:
+            for acc in doc.accounts:
+                row_id += 1
+                rows.append(
+                    {
+                        "row_id": row_id,
+                        "source_file": doc.source_file,
+                        "institution": acc.institution,
+                        "currency": acc.currency,
+                        "ending_balance": acc.ending_balance,
+                        "account_number": acc.account_number,
+                    }
+                )
+
+        return rows
 
 
 def run_pipeline(
