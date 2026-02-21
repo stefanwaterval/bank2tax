@@ -4,9 +4,16 @@ import requests
 
 
 class OllamaClient:
-    def __init__(self, base_url: str, model: str, timeout_s: float = 120.0) -> None:
+    def __init__(
+        self,
+        base_url: str,
+        model: str,
+        temperature: float = 0.0,
+        timeout_s: float = 120.0,
+    ) -> None:
         self.base_url = base_url
         self.model = model
+        self.temperature = temperature
         self.timeout_s = timeout_s
 
     def invoke(self, messages: list[dict[str, str]], schema: dict[str, Any]) -> str:
@@ -16,6 +23,7 @@ class OllamaClient:
             "model": self.model,
             "stream": False,
             "messages": messages,
+            "options": {"temperature": self.temperature},
         }
         body["format"] = schema
 
