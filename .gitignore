@@ -10,6 +10,8 @@ wheels/
 .venv
 
 # Project specific
+data/
+output/
 architecture.md
 
 # vscode
