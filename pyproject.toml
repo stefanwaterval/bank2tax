@@ -9,3 +9,9 @@ dependencies = [
     "nicegui>=3.7.1",
     "pydantic-ai-slim>=1.62.0",
 ]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.1",
+    "ruff>=0.15.2",
+]
