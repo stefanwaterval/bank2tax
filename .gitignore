@@ -20,3 +20,8 @@ architecture.md
 
 # macOS
 .DS_Store
+
+# Env variables
+.env
+.env.dev
+.env.prod
