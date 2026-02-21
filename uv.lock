@@ -190,6 +190,7 @@ dependencies = [
     { name = "docling" },
     { name = "nicegui" },
     { name = "pydantic-ai-slim" },
+    { name = "python-dotenv" },
 ]
 
 [package.dev-dependencies]
@@ -204,6 +205,7 @@ requires-dist = [
     { name = "docling", specifier = ">=2.74.0" },
     { name = "nicegui", specifier = ">=3.7.1" },
     { name = "pydantic-ai-slim", specifier = ">=1.62.0" },
+    { name = "python-dotenv", specifier = ">=1.2.1" },
 ]
 
 [package.metadata.requires-dev]
