@@ -111,7 +111,7 @@ def main() -> None:
                 pdf_paths=pdf_paths,
                 extractor=extractor,
                 output_dir=output_dir,
-                save_md=settings.save_md,
+                save_md=0,
             )
 
             t1 = perf_counter()
