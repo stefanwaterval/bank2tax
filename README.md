@@ -1,6 +1,6 @@
 # Bank2Tax
 
-![Docker Build](https://github.com/stefanwaterval/bank2tax/actions/workflows/docker-publish.yml/badge.svg)
+[![Build and Push Docker Image](https://github.com/stefanwaterval/bank2tax/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/stefanwaterval/bank2tax/actions/workflows/docker-publish.yml)
 
 Bank2Tax is a lightweight tool for extracting structured account information from end-of-the-year bank statements using OCR and large language models.
 It converts PDF statements to Markdown, extracts account numbers and ending balances, and returns the results as structured JSON or via a simple web interface.
@@ -127,7 +127,7 @@ SAVE_MD=0 # Set to 1 if you want to save markdowns (only in CLI mode)
 Launch the NiceGUI web application:
 
 ```bash
-uv python -m bank2tax.app.web
+uv run python -m bank2tax.app.web
 ```
 
 This starts a local web UI where PDF files can be uploade directly.
@@ -137,7 +137,7 @@ This starts a local web UI where PDF files can be uploade directly.
 Run extraction from a folder of PDFs:
 
 ```bash
-uv python -m bank2tax.app.cli
+uv run python -m bank2tax.app.cli
 ```
 
 PDFs are read from `BANK2TAX_DATA_DIR` (or `data/` by default).\
