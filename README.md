@@ -1,5 +1,7 @@
 # Bank2Tax
 
+![Docker Build](https://github.com/stefanwaterval/bank2tax/actions/workflows/docker-publish.yml/badge.svg)
+
 Bank2Tax is a lightweight tool for extracting structured account information from end-of-the-year bank statements using OCR and large language models.
 It converts PDF statements to Markdown, extracts account numbers and ending balances, and returns the results as structured JSON or via a simple web interface.
 It can be used to simplify manual entry into tax softwares.
