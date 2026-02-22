@@ -4,6 +4,8 @@ from pydantic import BaseModel, Field
 
 
 class ExtractedAccount(BaseModel):
+    """Structured representation of a single bank account."""
+
     account_number: str | None = Field(
         default=None,
         description="Bank Account Number",
@@ -23,5 +25,7 @@ class ExtractedAccount(BaseModel):
 
 
 class ExtractedDocument(BaseModel):
+    """Structured representation of extracted data from one document."""
+
     source_file: str
     accounts: List[ExtractedAccount]

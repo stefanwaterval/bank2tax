@@ -3,10 +3,23 @@ from bank2tax.core.schema import ExtractedDocument
 
 
 class ExtractorAgent:
+    """Agent responsible for extracting structured account data from documents."""
+
     def __init__(self, client: OllamaClient) -> None:
+        """Initialize the extractor with an LLM client.
+
+        Args:
+            client: OllamaClient used to call the language model.
+        """
         self.client = client
 
     def extract(self, markdown: str, source_file: str) -> str:
+        """Extract structured account information from a Markdown document.
+
+        Args:
+            markdown: Document content in Markdown format.
+            source_file: Name of the original source file.
+        """
         schema = ExtractedDocument.model_json_schema()
 
         system = (

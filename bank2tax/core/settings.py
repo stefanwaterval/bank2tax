@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 
 @dataclass(frozen=True)
 class Settings:
+    """Application configuration loaded from environment variables."""
+
     # Paths
     project_root: Path
     data_dir: Path
@@ -23,6 +25,7 @@ class Settings:
 
 
 def load_settings() -> Settings:
+    """Load application settings from environment variables and defaults."""
     # bank2tax/bank2tax/app/settings.py -> project root is two levels up
     project_root = Path(__file__).resolve().parents[2]
 

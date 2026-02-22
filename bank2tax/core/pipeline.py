@@ -9,10 +9,13 @@ from bank2tax.core.schema import ExtractedAccount, ExtractedDocument
 
 @dataclass(frozen=True)
 class PipelineResult:
+    """Container for structured extraction results."""
+
     documents: list[ExtractedDocument]
     accounts: list[ExtractedAccount]
 
     def to_table_rows(self) -> list[dict[str, Any]]:
+        """Flatten extracted data into row-oriented dictionaries."""
         rows = []
         row_id = 0
         for doc in self.documents:
@@ -38,6 +41,14 @@ def run_pipeline(
     output_dir: Path,
     save_md: int = 0,
 ) -> PipelineResult:
+    """Run the full extraction pipeline on a collection of PDFs.
+
+    Args:
+        pdf_paths: Paths to input PDF files.
+        extractor: Agent used to extract structured data.
+        output_dir: Directory where outputs are written.
+        save_md: Whether to save intermediate Markdown files (1 to enable).
+    """
     documents: list[ExtractedDocument] = []
     accounts: list[ExtractedAccount] = []
 

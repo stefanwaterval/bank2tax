@@ -6,9 +6,10 @@ _converter = DocumentConverter()
 
 
 def pdf_to_markdown(pdf_path: str | Path) -> str:
-    """
-    Convert a PDF file to Markdown using Docling.
-    Returns the full document as a Markdown string.
+    """Convert a PDF file to a Markdown string using Docling.
+
+    Args:
+        pdf_path: Path to the input PDF file.
     """
     pdf_path = Path(pdf_path)
 
