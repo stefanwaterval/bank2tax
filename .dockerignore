@@ -1,0 +1,38 @@
+# Version control
+.git
+.github
+.gitattributes
+.gitignore
+
+# Local environments
+.venv
+env/
+venv/
+.env
+.env.*
+.python-version
+
+# Caches and build artifacts
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+*.pyo
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+MANIFEST
+
+# OS files
+.DS_Store
+
+# Project
+tests/
+data/
+output/
+
+# Editor
+.vscode/

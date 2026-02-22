@@ -137,7 +137,7 @@ def main() -> None:
 
     run_btn.on_click(on_run)
 
-    ui.run(title="bank2tax", reload=False, host="127.0.0.1", port=8080)
+    ui.run(title="bank2tax", reload=False, host="0.0.0.0", port=8080)
 
 
 if __name__ == "__main__":

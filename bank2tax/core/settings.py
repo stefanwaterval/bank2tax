@@ -36,7 +36,7 @@ def load_settings() -> Settings:
         data_dir=Path(os.getenv("BANK2TAX_DATA_DIR", str(project_root / "data"))),
         output_dir=Path(os.getenv("BANK2TAX_OUTPUT_DIR", str(project_root / "output"))),
         ollama_base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
-        ollama_model=os.getenv("OLLAMA_MODEL", "mistral:7b"),
+        ollama_model=os.getenv("OLLAMA_MODEL", "llama3.1:8b"),
         ollama_temperature=float(os.getenv("OLLAMA_TEMPERATURE", "0.0")),
         ollama_timeout_s=float(os.getenv("OLLAMA_TIMEOUT_S", "120")),
         save_md=int(os.getenv("SAVE_MD", "0")),
